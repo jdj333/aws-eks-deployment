@@ -24,7 +24,7 @@ const vpc = new awsx.ec2.Vpc(`${stackName}-vpc`, {
 //const exsistingVPC = aws.ec2.Vpc.get(`${stackName}-vpc`, "vpc-0579593528d2b3088");
 
 // Web Security Group
-const webSecurityGroup = new awsx.ec2.SecurityGroup(`${stackName}-doterra-web-access`, {
+const webSecurityGroup = new awsx.ec2.SecurityGroup(`${stackName}-company-web-access`, {
     vpc: vpc,
     tags: {
         "Environment" : stackName
@@ -196,7 +196,7 @@ const service = new k8s.core.v1.Service(`${stackName}-service`,
             type: "LoadBalancer",
             ports: [{ port: 80, targetPort: 8080 }],
             selector: appLabels,
-            loadBalancerSourceRanges: [publicIP] // Restrict access to only doTERRA
+            loadBalancerSourceRanges: [publicIP] // Restrict access to only company
         },
     },
     {
