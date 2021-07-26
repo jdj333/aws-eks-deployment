@@ -1,0 +1,3 @@
+name: eks-jenkins-server
+runtime: nodejs
+description: eks cluster for Jenkins Server

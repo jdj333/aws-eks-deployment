@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+     jenkins-server:
+          image: jenkins/jenkins:lts
+          container_name: jenkins-server
+          privileged: true
+          hostname: jenkinsserver
+          user: root
+          environment:
+               - TZ=America/Denver
+          ports: 
+               - "8080:8080"
+               - "50000:50000"
+          networks:
+               jenkins-net:
+                    aliases: 
+                         - jenkins-net
+          volumes: 
+           - jenkins-data:/var/jenkins_home
+           - /var/run/docker.sock:/var/run/docker.sock
+     jenkins-agent-1:
+          depends_on: 
+               - jenkins-server
+          image: jenkins/agent:jdk11
+          container_name: jenkins-agent-1
+          hostname: jenkinsagent1
+          user: root
+          command: java -jar /usr/share/jenkins/agent.jar
+          networks:
+               jenkins-net:
+                    aliases: 
+                         - jenkins-net
+          
+volumes: 
+     jenkins-data:
+networks:
+     jenkins-net:
